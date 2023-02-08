@@ -11,11 +11,14 @@ class App extends Component{
         btnDisplay: false,
         username: "",
         password: "",
+        captcha: "",
+        userCaptcha: ""
     });
 
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCaptcha = this.handleCaptcha.bind(this);
 
   }
   handleUsername(e){
@@ -39,22 +42,38 @@ class App extends Component{
       this.setState({
           display: true,
           btnDisplay:true
+      });
+
+      let random = Math.random().toString(36).substring(7);
+      this.setState({
+          captcha: random
       })
+
   }
+    handleCaptcha(e){
+      let userCaptcha = e.target.value
+      if(!userCaptcha)
+          return;
+      this.setState({
+          btnDisplay: false
+      })
+
+    }
+
 
   renderCaptcha(){
       return(
           <div>
               <Form.Group as={Row} controlId="formPlaintextEmail">
                   <Form.Label column sm="4">
-                      Captcha
+                      {this.state.captcha}
                   </Form.Label>
                   <Col>
-                      <Form.Control type="text" placeholder="Enter Captcha"  />
+                      <Form.Control type="text" placeholder="Enter Captcha" onChange={this.handleCaptcha} />
                   </Col>
               </Form.Group>
 
-              <Button variant="primary" type="save" disabled={this.state.btnDisplay}>
+              <Button variant="primary" type="save" disabled={this.state.btnDisplay} >
                   Login
               </Button>
 
