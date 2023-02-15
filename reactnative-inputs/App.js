@@ -8,17 +8,17 @@ function HomeScreen({ navigation }) {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Home Screen</Text>
       <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
+        title="Create Match"
+        onPress={() => navigation.navigate('CreateMatch')}
       />
     </View>
   );
 }
 
-function DetailsScreen() {
+function CreateMatchScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
+      <Text>Create Match Screen</Text>
     </View>
   );
 }
@@ -30,7 +30,7 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
+        <Stack.Screen name="CreateMatch" component={CreateMatchScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
