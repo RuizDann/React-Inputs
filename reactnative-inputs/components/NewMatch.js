@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Button, TextInput, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Picker } from '@react-native-picker/picker';
 import Checkbox from 'expo-checkbox';
 
 export default function NewMatch( { navigation } ) {
@@ -9,17 +10,34 @@ export default function NewMatch( { navigation } ) {
     const [isAllAmerH, setAllAmerH] = useState(false);
     const [isNatQualA, setNatQualA] = useState(false);
     const [isAllAmerA, setAllAmerA] = useState(false);
+    const [weight, setWeight] = useState('Unknown');
 
     return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps='handled'>
-      <Text style={styles.titleText}>Our Wrestler</Text>
+    <Text style={styles.titleText}>Our Wrestler</Text>
       <View style={styles.mainSection}>
+        <Picker
+            selectedValue={weight}
+            onValueChange={(itemValue, itemIndex) => setWeight(itemValue)}
+            style={styles.picker}
+        >
+        <Picker.Item label="Weight Class" value="Unknown" />
+        <Picker.Item label="125" value="125" />
+        <Picker.Item label="133" value="133" />
+        <Picker.Item label="141" value="141" />
+        <Picker.Item label="149" value="149" />
+        <Picker.Item label="157" value="157" />
+        <Picker.Item label="165" value="165" />
+        <Picker.Item label="174" value="174" />
+        <Picker.Item label="184" value="184" />
+        <Picker.Item label="197" value="197" />
+        <Picker.Item label="HWT" value="HWT" />
+        </Picker>
         <TextInput 
             style={styles.input}
             placeholder='First Name'
             placeholderTextColor='black'
             textAlign='center'
-            
         />
         <TextInput 
             style={styles.input}
@@ -131,5 +149,14 @@ export default function NewMatch( { navigation } ) {
         padding: 10,
         fontColor: 'black',
         flexDirection: 'row',
-    }
+    },
+    picker: {
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        flexDirection: 'column-wrap',
+        width: 300,
+        height: 100,
+        marginVertical: 30,
+        borderWidth: 1,
+  },
   });
