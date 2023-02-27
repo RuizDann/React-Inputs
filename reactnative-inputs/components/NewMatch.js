@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, Button, TextInput, ScrollView } f
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Picker } from '@react-native-picker/picker';
+import { SelectList } from 'react-native-dropdown-select-list';
 import Checkbox from 'expo-checkbox';
 
 export default function NewMatch( { navigation } ) {
@@ -11,12 +12,40 @@ export default function NewMatch( { navigation } ) {
     const [isNatQualA, setNatQualA] = useState(false);
     const [isAllAmerA, setAllAmerA] = useState(false);
     const [weight, setWeight] = useState('Unknown');
+    const [selected, setSelected] = React.useState("");
+    const data = [
+        {key:'1', value:'125'},
+        {key:'2', value:'133'},
+        {key:'3', value:'141'},
+        {key:'4', value:'149'},
+        {key:'5', value:'157'},
+        {key:'6', value:'165'},
+        {key:'7', value:'174'},
+        {key:'8', value:'184'},
+        {key:'9', value:'197'},
+        {key:'10', value:'HWT'},
+  ]
 
     return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps='handled'>
     <Text style={styles.titleText}>Our Wrestler</Text>
-      <View style={styles.mainSection}>
-        <Picker
+    <View style={styles.mainSection}>
+    <SelectList 
+        setSelected={(val) => setSelected(val)} 
+        data={data} 
+        save="value"
+        placeholder="Weight Class"
+        boxStyles={{
+            width: 150, 
+            height: 40, 
+            backgroundColor: 'transparent', 
+            borderRadius: 0, 
+            borderWidth: 1, 
+            borderColor: 'black', 
+            margin: 10,
+        }}
+    />
+    {/* <Picker
             selectedValue={weight}
             onValueChange={(itemValue, itemIndex) => setWeight(itemValue)}
             style={styles.picker}
@@ -32,7 +61,7 @@ export default function NewMatch( { navigation } ) {
         <Picker.Item label="184" value="184" />
         <Picker.Item label="197" value="197" />
         <Picker.Item label="HWT" value="HWT" />
-        </Picker>
+        </Picker> */}
         <TextInput 
             style={styles.input}
             placeholder='First Name'
@@ -112,9 +141,8 @@ export default function NewMatch( { navigation } ) {
         flex: 1,
         backgroundColor: 'lightgray',
         alignItems: 'center',
-        
-        
     },
+
     mainSection: {
         flexWrap: 'wrap',
         flexDirection: 'row',
@@ -122,6 +150,7 @@ export default function NewMatch( { navigation } ) {
         gap: '10rem',
         justifyContent: 'center',
     },
+
     titleText: {
         height: '8%', 
         padding: 20,
@@ -131,6 +160,7 @@ export default function NewMatch( { navigation } ) {
         fontSize: 20,
         
     },
+
     input: {
         alignItems: 'stretch',
         width: 150,
@@ -140,6 +170,7 @@ export default function NewMatch( { navigation } ) {
         padding: 10,
         fontColor: 'black',
       },
+
     checkInput: {
         alignItems: 'stretch',
         width: 150,
@@ -150,6 +181,7 @@ export default function NewMatch( { navigation } ) {
         fontColor: 'black',
         flexDirection: 'row',
     },
+
     picker: {
         justifyContent: 'center',
         alignItems: 'stretch',
@@ -159,4 +191,5 @@ export default function NewMatch( { navigation } ) {
         marginVertical: 30,
         borderWidth: 1,
   },
+
   });
