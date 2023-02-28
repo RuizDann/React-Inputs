@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Picker } from '@react-native-picker/picker';
 import { SelectList } from 'react-native-dropdown-select-list';
 import Checkbox from 'expo-checkbox';
+import { weightClasses } from './LorasData';
 
 export default function NewMatch( { navigation } ) {
     const [isNatQualH, setNatQualH] = useState(false);
@@ -13,18 +14,18 @@ export default function NewMatch( { navigation } ) {
     const [isAllAmerA, setAllAmerA] = useState(false);
     const [weight, setWeight] = useState('Unknown');
     const [selected, setSelected] = React.useState("");
-    const data = [
-        {key:'1', value:'125'},
-        {key:'2', value:'133'},
-        {key:'3', value:'141'},
-        {key:'4', value:'149'},
-        {key:'5', value:'157'},
-        {key:'6', value:'165'},
-        {key:'7', value:'174'},
-        {key:'8', value:'184'},
-        {key:'9', value:'197'},
-        {key:'10', value:'HWT'},
-  ]
+    const weightClasses = [
+        {label: '125', value: '125'},
+        {label: '133', value: '133'},
+        {label: '141', value: '141'},
+        {label: '149', value: '149'},
+        {label: '157', value: '157'},
+        {label: '165', value: '165'},
+        {label: '174', value: '174'},
+        {label: '184', value: '184'},
+        {label: '197', value: '197'},
+        {label: 'HWT', value: 'HWT'},
+    ];
 
     return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps='handled'>
@@ -32,18 +33,19 @@ export default function NewMatch( { navigation } ) {
     <View style={styles.mainSection}>
     <SelectList 
         setSelected={(val) => setSelected(val)} 
-        data={data} 
+        data={weightClasses}
         save="value"
         placeholder="Weight Class"
         boxStyles={{
             width: 150, 
-            height: 40, 
+            height: 50, 
             backgroundColor: 'transparent', 
             borderRadius: 0, 
             borderWidth: 1, 
             borderColor: 'black', 
             margin: 10,
         }}
+
     />
     {/* <Picker
             selectedValue={weight}
@@ -62,6 +64,7 @@ export default function NewMatch( { navigation } ) {
         <Picker.Item label="197" value="197" />
         <Picker.Item label="HWT" value="HWT" />
         </Picker> */}
+
         <TextInput 
             style={styles.input}
             placeholder='First Name'
