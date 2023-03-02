@@ -7,12 +7,16 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import Checkbox from 'expo-checkbox';
 import { weightClasses } from './LorasData';
 
-export default function NewMatch( { navigation } ) {
+const NewMatch = ( { navigation } ) => {
+    const [firstName, setFirstName] = useState('first name');
+    const [lastName, setLastName] = useState('last name');
+    const [team, setTeam] = useState('team');
+    const [weight, setWeight] = useState('weight class');
     const [isNatQualH, setNatQualH] = useState(false);
     const [isAllAmerH, setAllAmerH] = useState(false);
     const [isNatQualA, setNatQualA] = useState(false);
     const [isAllAmerA, setAllAmerA] = useState(false);
-    const [weight, setWeight] = useState('Unknown');
+    
     const [selected, setSelected] = React.useState("");
     const weightClasses = [
         {label: '125', value: '125'},
@@ -31,8 +35,33 @@ export default function NewMatch( { navigation } ) {
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps='handled'>
     <Text style={styles.titleText}>Our Wrestler</Text>
     <View style={styles.mainSection}>
-    <SelectList 
-        setSelected={(val) => setSelected(val)} 
+    
+        <TextInput 
+            onChangeText={(firstname) => setFirstName(firstname)}
+            placeholder='First Name'
+            style={styles.input}
+            placeholderTextColor='black'
+            textAlign='center'
+        />
+
+        <TextInput 
+            onChangeText={(lastname) => setLastName(lastname)}
+            placeholder='Last Name'
+            style={styles.input}
+            placeholderTextColor='black'
+            textAlign='center'
+        />
+
+        <TextInput
+            onChangeText={(team) => setTeam(team)}
+            placeholder="Team"
+            style={styles.input}
+            placeholderTextColor="black"
+            textAlign="center"
+        />
+
+        <SelectList 
+        setSelected={(selected) => setSelected(selected)}
         data={weightClasses}
         save="value"
         placeholder="Weight Class"
@@ -45,57 +74,21 @@ export default function NewMatch( { navigation } ) {
             borderColor: 'black', 
             margin: 10,
         }}
+        />
 
-    />
-    {/* <Picker
-            selectedValue={weight}
-            onValueChange={(itemValue, itemIndex) => setWeight(itemValue)}
-            style={styles.picker}
-        >
-        <Picker.Item label="Weight Class" value="Unknown" />
-        <Picker.Item label="125" value="125" />
-        <Picker.Item label="133" value="133" />
-        <Picker.Item label="141" value="141" />
-        <Picker.Item label="149" value="149" />
-        <Picker.Item label="157" value="157" />
-        <Picker.Item label="165" value="165" />
-        <Picker.Item label="174" value="174" />
-        <Picker.Item label="184" value="184" />
-        <Picker.Item label="197" value="197" />
-        <Picker.Item label="HWT" value="HWT" />
-        </Picker> */}
-
-        <TextInput 
-            style={styles.input}
-            placeholder='First Name'
-            placeholderTextColor='black'
-            textAlign='center'
-        />
-        <TextInput 
-            style={styles.input}
-            placeholder='Last Name'
-            placeholderTextColor='black'
-            textAlign='center'
-        />
-        <TextInput 
-            style={styles.input}
-            placeholder="Team"
-            placeholderTextColor="black"
-            textAlign="center"
-        />
-        <TextInput 
-            style={styles.input}
-            placeholder="Weight Class"
-            placeholderTextColor="black"
-            textAlign="center"
-        />
         <View style={styles.checkInput}>
         <Text>NAT QUAL</Text>
-        <Checkbox style={{marginLeft: 25}} value={isNatQualH} onValueChange={setNatQualH}/> 
+            <Checkbox style={{marginLeft: 25}} 
+                value={isNatQualH} 
+                onValueChange={setNatQualH}
+            /> 
         </View>
         <View style={styles.checkInput}>
-        <Text>All American</Text>
-        <Checkbox style={{marginLeft: 25}} value={isAllAmerH} onValueChange={setAllAmerH}/>
+            <Text>All American</Text>
+            <Checkbox style={{marginLeft: 25}}
+            value={isAllAmerH}
+            onValueChange={setAllAmerH}
+            />
         </View>
       </View>
       <Text style={styles.titleText}>Opponent</Text>
@@ -134,10 +127,22 @@ export default function NewMatch( { navigation } ) {
         <Checkbox style={{marginLeft: 25}} value={isAllAmerA} onValueChange={setAllAmerA}/>
         </View>
       </View>
-      <Button title="Submit" onPress={() => navigation.navigate('MatchInfo')}/>
+      <Button title="Submit" onPress={() => navigation.navigate('MatchInfo', {
+            firstName: firstName,
+            lastName: lastName,
+            team: team,
+            weight: weight,
+            isNatQualH: isNatQualH,
+            isAllAmerH: isAllAmerH,
+            isNatQualA: isNatQualA,
+            })
+        }
+    />
     </ScrollView>
-    )
-  }
+    );
+};
+
+export default NewMatch;
 
   const styles = StyleSheet.create({
     container: {

@@ -1,18 +1,26 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Button } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Button, TextInput, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function MatchInfo({ navigation }) {
+const MatchInfo = ({ route }) => {
     return (
-        <View style={styles.mainSection}>
-        <Text>Match Information</Text>
-        <Button title="Create New Match" onPress={() => navigation.navigate('HomeScreen')}/>
-        </View>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.mainSection}>
+            <Text style={styles.titleText}>
+              Match Information
+            </Text>
+            <Text style={styles.textStyle}>
+              Values passed from NewMatch.js: {route.params.firstName}, {route.params.lastName}, {route.params.team}, {route.params.weight}, {route.params.isNatQualH}y, {route.params.isAllAmerH}, {route.params.isNatQualA}, {route.params.isAllAmerA}.
+            </Text>
+          </View>
+        </SafeAreaView>
     );
-    }
+  };
 
-    const styles = StyleSheet.create({
+  export default MatchInfo;
+
+  const styles = StyleSheet.create({
   container: {
     height: '15%',
     backgroundColor: 'skyblue',
@@ -32,5 +40,10 @@ export default function MatchInfo({ navigation }) {
     fontWeight: "bold",
     fontSize: 30,
     color: "white",
-  }
+  },
+  textStyle: {
+    textAlign: "center",
+    fontSize: 16,
+    marginVertical: 10,
+  },
 });
