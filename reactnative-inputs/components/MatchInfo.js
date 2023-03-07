@@ -11,7 +11,15 @@ const MatchInfo = ({ route }) => {
               Match Information
             </Text>
             <Text style={styles.textStyle}>
-              Values passed from NewMatch.js: {route.params.firstName}, {route.params.lastName}, {route.params.team}, {route.params.weight}, {route.params.isNatQualH}y, {route.params.isAllAmerH}, {route.params.isNatQualA}, {route.params.isAllAmerA}.
+              Values passed from NewMatch.js: 
+                {route.params.firstNameH}, 
+                {route.params.lastNameH}, 
+                {route.params.teamH}, 
+                {route.params.weightH}, 
+                {route.params.isNatQualH}y, 
+                {route.params.isAllAmerH}, 
+                {route.params.isNatQualA},
+                {route.params.isAllAmerA},
             </Text>
           </View>
         </SafeAreaView>

@@ -8,28 +8,14 @@ import Checkbox from 'expo-checkbox';
 import { weightClasses } from './LorasData';
 
 const NewMatch = ( { navigation } ) => {
-    const [firstName, setFirstName] = useState('first name');
-    const [lastName, setLastName] = useState('last name');
-    const [team, setTeam] = useState('team');
-    const [weight, setWeight] = useState('weight class');
+    const [firstNameH, setFirstNameH] = useState('first name');
+    const [lastNameH, setLastNameH] = useState('last name');
+    const [teamH, setTeamH] = useState('team');
+    const [weightH, setWeightH] = useState('weight class');
     const [isNatQualH, setNatQualH] = useState(false);
     const [isAllAmerH, setAllAmerH] = useState(false);
     const [isNatQualA, setNatQualA] = useState(false);
     const [isAllAmerA, setAllAmerA] = useState(false);
-    
-    const [selected, setSelected] = React.useState("");
-    const weightClasses = [
-        {label: '125', value: '125'},
-        {label: '133', value: '133'},
-        {label: '141', value: '141'},
-        {label: '149', value: '149'},
-        {label: '157', value: '157'},
-        {label: '165', value: '165'},
-        {label: '174', value: '174'},
-        {label: '184', value: '184'},
-        {label: '197', value: '197'},
-        {label: 'HWT', value: 'HWT'},
-    ];
 
     return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps='handled'>
@@ -37,7 +23,7 @@ const NewMatch = ( { navigation } ) => {
     <View style={styles.mainSection}>
     
         <TextInput 
-            onChangeText={(firstname) => setFirstName(firstname)}
+            onChangeText={(firstNameH) => setFirstNameH(firstNameH)}
             placeholder='First Name'
             style={styles.input}
             placeholderTextColor='black'
@@ -45,7 +31,7 @@ const NewMatch = ( { navigation } ) => {
         />
 
         <TextInput 
-            onChangeText={(lastname) => setLastName(lastname)}
+            onChangeText={(lastNameH) => setLastNameH(lastNameH)}
             placeholder='Last Name'
             style={styles.input}
             placeholderTextColor='black'
@@ -53,7 +39,7 @@ const NewMatch = ( { navigation } ) => {
         />
 
         <TextInput
-            onChangeText={(team) => setTeam(team)}
+            onChangeText={(teamH) => setTeamH(teamH)}
             placeholder="Team"
             style={styles.input}
             placeholderTextColor="black"
@@ -61,7 +47,7 @@ const NewMatch = ( { navigation } ) => {
         />
 
         <SelectList 
-        setSelected={(selected) => setSelected(selected)}
+        setSelected={(weightH) => setWeightH(weightH)}
         data={weightClasses}
         save="value"
         placeholder="Weight Class"
@@ -128,13 +114,14 @@ const NewMatch = ( { navigation } ) => {
         </View>
       </View>
       <Button title="Submit" onPress={() => navigation.navigate('MatchInfo', {
-            firstName: firstName,
-            lastName: lastName,
-            team: team,
-            weight: weight,
+            firstNameH: firstNameH,
+            lastNameH: lastNameH,
+            teamH: teamH,
+            weightH: weightH,
             isNatQualH: isNatQualH,
             isAllAmerH: isAllAmerH,
             isNatQualA: isNatQualA,
+            isAllAmerA: isAllAmerA,
             })
         }
     />
