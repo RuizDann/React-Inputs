@@ -1,57 +1,73 @@
 import React from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Button, TextInput, ScrollView } from 'react-native';
+import { DataTable } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import { CSVLink, CSVDownload} from 'react-csv';
 
 const MatchInfo = ({ route }) => {
-    return (
-        <SafeAreaView style={styles.container}>
-          <View style={styles.mainSection}>
-            <Text style={styles.titleText}>
-              Match Information
-            </Text>
-            <Text style={styles.textStyle}>
-              Values passed from NewMatch.js: 
-                {route.params.firstNameH}, 
-                {route.params.lastNameH}, 
-                {route.params.teamH}, 
-                {route.params.weightH}, 
-                {route.params.isNatQualH}y, 
-                {route.params.isAllAmerH}, 
-                {route.params.isNatQualA},
-                {route.params.isAllAmerA},
-            </Text>
-          </View>
-        </SafeAreaView>
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1, padding: 10 }}>
+      <DataTable style={styles.container} >
+        <DataTable.Header style={styles.tableHeader}>
+          <DataTable.Title style={{ justifyContent: 'center', alignSelf: 'center' }}>Weight Class: {route.params.weight}</DataTable.Title>
+        </DataTable.Header>
+        <DataTable.Header style={styles.tableHeader}>
+          <DataTable.Title >First Name</DataTable.Title>
+          <DataTable.Title >Last Name</DataTable.Title>
+          <DataTable.Title >Team</DataTable.Title>
+          <DataTable.Title >Nat Qual</DataTable.Title>
+          <DataTable.Title >All Amer</DataTable.Title>
+        </DataTable.Header>
+        <DataTable.Header style={styles.tableData}>
+          <DataTable.Title >{route.params.firstNameH}</DataTable.Title>
+          <DataTable.Title >{route.params.lastNameH}</DataTable.Title>
+          <DataTable.Title >{route.params.teamH}</DataTable.Title>
+          <DataTable.Title >{route.params.isNatQualH}</DataTable.Title>
+          <DataTable.Title >{route.params.isAllAmerH}</DataTable.Title>
+        </DataTable.Header>
+        <DataTable.Header style={styles.tableData}>
+          <DataTable.Title >{route.params.firstNameA}</DataTable.Title>
+          <DataTable.Title >{route.params.lastNameA}</DataTable.Title>
+          <DataTable.Title >{route.params.teamA}</DataTable.Title>
+          <DataTable.Title >{route.params.isNatQualA}</DataTable.Title>
+          <DataTable.Title >{route.params.isAllAmerA}</DataTable.Title>
+        </DataTable.Header>
+        <DataTable.Cell style={{ justifyContent: 'center', alignSelf: 'center' }}>
+          <Button
+            title="Save Match"
+            onPress={() => alert('Match Saved')}
+          />
+        </DataTable.Cell>
+
+      </DataTable>
+      </View>
+    </SafeAreaView>
     );
   };
 
   export default MatchInfo;
 
   const styles = StyleSheet.create({
-  container: {
-    height: '15%',
-    backgroundColor: 'skyblue',
-    alignItems: "center",
-    justifyContent: "center",
+    container: {
+        flex: 1,
+        padding: 15,
+        paddingTop: 20,
+        backgroundColor: 'lightgray',
+        alignItems: 'center',
+    },
 
-  },
-  mainSection: {
-    height: '80%',
-    alignItems: "center", 
-    justifyContent: "center"
-  },
-  titleText: {
-    alignItems: "center",
-    fontFamily: "Arial",
-    font: "Arial Black",
-    fontWeight: "bold",
-    fontSize: 30,
-    color: "white",
-  },
-  textStyle: {
-    textAlign: "center",
-    fontSize: 16,
-    marginVertical: 10,
-  },
-});
+    tableHeader: {
+      height: 50,
+      backgroundColor: '#537791',
+      alignSelf: 'stretch',
+    },
+
+    tableData: {
+      height: 50,
+      backgroundColor: 'lightgray',
+      alignSelf: 'stretch',
+    },
+
+  });

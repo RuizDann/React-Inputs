@@ -8,23 +8,43 @@ import Checkbox from 'expo-checkbox';
 import { weightClasses } from './LorasData';
 
 const NewMatch = ( { navigation } ) => {
-    const [firstNameH, setFirstNameH] = useState('first name');
-    const [lastNameH, setLastNameH] = useState('last name');
-    const [teamH, setTeamH] = useState('team');
-    const [weightH, setWeightH] = useState('weight class');
-    const [isNatQualH, setNatQualH] = useState(false);
-    const [isAllAmerH, setAllAmerH] = useState(false);
-    const [isNatQualA, setNatQualA] = useState(false);
-    const [isAllAmerA, setAllAmerA] = useState(false);
+    const [firstNameH, setFirstNameH] = useState('home first name');
+    const [firstNameA, setFirstNameA] = useState('first name');
+    const [lastNameH, setLastNameH] = useState('home last name');
+    const [lastNameA, setLastNameA] = useState('last name');
+    const [teamH, setTeamH] = useState('home team');
+    const [teamA, setTeamA] = useState('away team');
+    const [weight, setWeight] = useState('weight class');
+    const [isNatQualH, setNatQualH] = useState('NO');
+    const [isAllAmerH, setAllAmerH] = useState('NO');
+    const [isNatQualA, setNatQualA] = useState('NO');
+    const [isAllAmerA, setAllAmerA] = useState('NO');
 
     return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps='handled'>
-    <Text style={styles.titleText}>Our Wrestler</Text>
-    <View style={styles.mainSection}>
-    
+        <View style={styles.mainSection}>
+            <SelectList 
+                setSelected={(weight) => setWeight(weight)}
+                data={weightClasses}
+                save="value"
+                placeholder={"Weight Class"}
+                boxStyles={{
+                    width: 150, 
+                    height: 45, 
+                    backgroundColor: 'transparent', 
+                    borderRadius: 0, 
+                    borderWidth: 1, 
+                    borderColor: 'black', 
+                    margin: 20,
+                }}
+            />
+        </View>
+        
+        <Text style={styles.titleText}>Home Wrestler</Text>
+        <View style={styles.mainSection}>
         <TextInput 
             onChangeText={(firstNameH) => setFirstNameH(firstNameH)}
-            placeholder='First Name'
+            placeholder={'First Name'}
             style={styles.input}
             placeholderTextColor='black'
             textAlign='center'
@@ -32,7 +52,7 @@ const NewMatch = ( { navigation } ) => {
 
         <TextInput 
             onChangeText={(lastNameH) => setLastNameH(lastNameH)}
-            placeholder='Last Name'
+            placeholder={'Last Name'}
             style={styles.input}
             placeholderTextColor='black'
             textAlign='center'
@@ -40,86 +60,113 @@ const NewMatch = ( { navigation } ) => {
 
         <TextInput
             onChangeText={(teamH) => setTeamH(teamH)}
-            placeholder="Team"
+            placeholder={"Team"}
             style={styles.input}
             placeholderTextColor="black"
             textAlign="center"
         />
 
         <SelectList 
-        setSelected={(weightH) => setWeightH(weightH)}
-        data={weightClasses}
-        save="value"
-        placeholder="Weight Class"
-        boxStyles={{
-            width: 150, 
-            height: 50, 
-            backgroundColor: 'transparent', 
-            borderRadius: 0, 
-            borderWidth: 1, 
-            borderColor: 'black', 
-            margin: 10,
-        }}
-        />
-
-        <View style={styles.checkInput}>
-        <Text>NAT QUAL</Text>
-            <Checkbox style={{marginLeft: 25}} 
-                value={isNatQualH} 
-                onValueChange={setNatQualH}
-            /> 
-        </View>
-        <View style={styles.checkInput}>
-            <Text>All American</Text>
-            <Checkbox style={{marginLeft: 25}}
-            value={isAllAmerH}
-            onValueChange={setAllAmerH}
+                setSelected={(isNatQualH) => setNatQualH(isNatQualH)}
+                data={[{label: 'YES', value: 'YES'}, {label: 'NO', value: 'NO'}]}
+                save="value"
+                placeholder={'National Qualifier?'}
+                boxStyles={{
+                    width: 150, 
+                    height: 45, 
+                    backgroundColor: 'transparent', 
+                    borderRadius: 0, 
+                    borderWidth: 1, 
+                    borderColor: 'black', 
+                    margin: 20,
+                }}
             />
-        </View>
+        <SelectList 
+                setSelected={(isAllAmerH) => setAllAmerH(isAllAmerH)}
+                data={[{label: 'YES', value: 'YES'}, {label: 'NO', value: 'NO'}]}
+                save="value"
+                placeholder={'All American?'}
+                boxStyles={{
+                    width: 150, 
+                    height: 45, 
+                    backgroundColor: 'transparent', 
+                    borderRadius: 0, 
+                    borderWidth: 1, 
+                    borderColor: 'black', 
+                    margin: 20,
+                }}
+            />
       </View>
+
       <Text style={styles.titleText}>Opponent</Text>
       <View style={styles.mainSection}>
         <TextInput 
+            onChangeText={(firstNameA) => setFirstNameA(firstNameA)}
+            placeholder={'First Name'}
             style={styles.input}
-            placeholder='First Name'
-            placeholderTextColor='black'
-            textAlign='center'
-            
-        />
-        <TextInput 
-            style={styles.input}
-            placeholder='Last Name'
             placeholderTextColor='black'
             textAlign='center'
         />
+
         <TextInput 
+            onChangeText={(lastNameA) => setLastNameA(lastNameA)}
+            placeholder={'Last Name'}
             style={styles.input}
-            placeholder="Team"
+            placeholderTextColor='black'
+            textAlign='center'
+        />
+
+        <TextInput
+            onChangeText={(teamA) => setTeamA(teamA)}
+            placeholder={"Team"}
+            style={styles.input}
             placeholderTextColor="black"
             textAlign="center"
         />
-        <TextInput 
-            style={styles.input}
-            placeholder="Weight Class"
-            placeholderTextColor="black"
-            textAlign="center"
-        />
-        <View style={styles.checkInput}>
-            <Text>NAT QUAL</Text>
-        <Checkbox style={{marginLeft: 25}} value={isNatQualA} onValueChange={setNatQualA}/> 
-        </View>
-        <View style={styles.checkInput}>
-        <Text>All American</Text>
-        <Checkbox style={{marginLeft: 25}} value={isAllAmerA} onValueChange={setAllAmerA}/>
-        </View>
+
+        <SelectList 
+                setSelected={(isNatQualA) => setNatQualA(isNatQualA)}
+                data={[{label: 'YES', value: 'YES'}, {label: 'NO', value: 'NO'}]}
+                save="value"
+                placeholder={'National Qualifier?'}
+                boxStyles={{
+                    width: 150, 
+                    height: 45, 
+                    backgroundColor: 'transparent', 
+                    borderRadius: 0, 
+                    borderWidth: 1, 
+                    borderColor: 'black', 
+                    margin: 20,
+                }}
+            />
+        <SelectList 
+                setSelected={(isAllAmerA) => setAllAmerA(isAllAmerA)}
+                data={[{label: 'YES', value: 'YES'}, {label: 'NO', value: 'NO'}]}
+                save="value"
+                placeholder={'All American?'}
+                boxStyles={{
+                    width: 150, 
+                    height: 45, 
+                    backgroundColor: 'transparent', 
+                    borderRadius: 0, 
+                    borderWidth: 1, 
+                    borderColor: 'black', 
+                    margin: 20,
+                }}
+            />
       </View>
+
       <Button title="Submit" onPress={() => navigation.navigate('MatchInfo', {
+            weight: weight,
             firstNameH: firstNameH,
             lastNameH: lastNameH,
             teamH: teamH,
-            weightH: weightH,
             isNatQualH: isNatQualH,
             isAllAmerH: isAllAmerH,
+
+            firstNameA: firstNameA,
+            lastNameA: lastNameA,
+            teamA: teamA,
             isNatQualA: isNatQualA,
             isAllAmerA: isAllAmerA,
             })
