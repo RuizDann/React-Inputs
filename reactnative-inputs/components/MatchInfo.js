@@ -3,9 +3,23 @@ import { StyleSheet, Text, View, SafeAreaView, Button, TextInput, ScrollView } f
 import { DataTable } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { CSVLink, CSVDownload} from 'react-csv';
+
+
 
 const MatchInfo = ({ route }) => {
+  const matchData = [
+    { weight: route.params.weight, 
+      firstNameH: route.params.firstNameH, 
+      lastNameH: route.params.lastNameH, 
+      teamH: route.params.teamH, 
+      isNatQualH: route.params.isNatQualH, 
+      isAllAmerH: route.params.isAllAmerH, 
+      firstNameA: route.params.firstNameA, 
+      lastNameA: route.params.lastNameA, 
+      teamA: route.params.teamA, 
+      isNatQualA: route.params.isNatQualA, 
+      isAllAmerA: route.params.isAllAmerA }
+  ];
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, padding: 10 }}>
