@@ -4,8 +4,6 @@ import { DataTable } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-
-
 const MatchInfo = ({ route }) => {
   const matchData = [
     { weight: route.params.weight, 
@@ -49,10 +47,8 @@ const MatchInfo = ({ route }) => {
           <DataTable.Title >{route.params.isAllAmerA}</DataTable.Title>
         </DataTable.Header>
         <DataTable.Cell style={{ justifyContent: 'center', alignSelf: 'center' }}>
-          <Button
-            title="Save Match"
-            onPress={() => alert('Match Saved')}
-          />
+          {/* button onpress save matchData to a file */}
+          <Button title="Save Match" onPress={() => console.log(matchData)} />
         </DataTable.Cell>
 
       </DataTable>
