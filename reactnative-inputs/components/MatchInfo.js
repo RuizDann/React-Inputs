@@ -5,19 +5,68 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const MatchInfo = ({ route }) => {
-  const matchData = [
-    { weight: route.params.weight, 
-      firstNameH: route.params.firstNameH, 
-      lastNameH: route.params.lastNameH, 
-      teamH: route.params.teamH, 
-      isNatQualH: route.params.isNatQualH, 
-      isAllAmerH: route.params.isAllAmerH, 
-      firstNameA: route.params.firstNameA, 
-      lastNameA: route.params.lastNameA, 
-      teamA: route.params.teamA, 
-      isNatQualA: route.params.isNatQualA, 
-      isAllAmerA: route.params.isAllAmerA }
-  ];
+
+  constructor()
+  {
+    super();
+    this.state = {
+      matchData:[
+        {
+          'weight': route.params.weight,
+        },
+        {
+          'firstNameH': route.params.firstNameH,
+          'lastNameH': route.params.lastNameH,
+          'teamH': route.params.teamH,
+          'isNatQualH': route.params.isNatQualH,
+          'isAllAmerH': route.params.isAllAmerH,
+        },
+        {
+          'firstNameA': route.params.firstNameA,
+          'lastNameA': route.params.lastNameA,
+          'teamA': route.params.teamA,
+          'isNatQualA': route.params.isNatQualA,
+        }
+      ]
+    }
+  }
+
+  ExportToCsv() {
+    var csvRows = [];
+    var A = [['weight', 'firstNameH', 'lastNameH', 'teamH', 'isNatQualH', 'isAllAmerH', 'firstNameA', 'lastNameA', 'teamA', 'isNatQualA', 'isAllAmerA']];
+    var B = this.state.matchData;
+
+    for (var i = 0; i < B.length; ++i) {
+      A.push([B[i].weight, B[i].firstNameH, B[i].lastNameH, B[i].teamH, B[i].isNatQualH, B[i].isAllAmerH, B[i].firstNameA, B[i].lastNameA, B[i].teamA, B[i].isNatQualA, B[i].isAllAmerA]);
+  }
+
+  for (var i = 0; i < A.length; ++i) {
+    csvRows.push(A[i].join(','));
+  }
+
+  var csvString = csvRows.join("%0A");
+  var a = document.createElement('a');
+  a.href = 'data:attachment/csv,' + csvString;
+  a.target = '_Blank';
+  a.download = 'matchData.csv';
+  document.body.appendChild(a);
+  a.click();
+}
+
+
+  // const matchData = [
+  //   { weight: route.params.weight, 
+  //     firstNameH: route.params.firstNameH, 
+  //     lastNameH: route.params.lastNameH, 
+  //     teamH: route.params.teamH, 
+  //     isNatQualH: route.params.isNatQualH, 
+  //     isAllAmerH: route.params.isAllAmerH, 
+  //     firstNameA: route.params.firstNameA, 
+  //     lastNameA: route.params.lastNameA, 
+  //     teamA: route.params.teamA, 
+  //     isNatQualA: route.params.isNatQualA, 
+  //     isAllAmerA: route.params.isAllAmerA }
+  // ];
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, padding: 10 }}>
@@ -48,7 +97,7 @@ const MatchInfo = ({ route }) => {
         </DataTable.Header>
         <DataTable.Cell style={{ justifyContent: 'center', alignSelf: 'center' }}>
           {/* button onpress save matchData to a file */}
-          <Button title="Save Match" onPress={() => console.log(matchData)} />
+          <Button title="Save Match Data" onPress={this.ExportToCsv} />
         </DataTable.Cell>
 
       </DataTable>
