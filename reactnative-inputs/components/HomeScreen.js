@@ -10,7 +10,7 @@ export default function HomeScreen({ navigation }) {
       <Button title="Create New Match" onPress={() => navigation.navigate('NewMatch')}/>
     </View>
   );
-}
+}a
 
 const styles = StyleSheet.create({
   container: {

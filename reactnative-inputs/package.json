@@ -21,7 +21,7 @@
     "react-csv": "^2.2.2",
     "react-dom": "18.1.0",
     "react-json-to-csv": "^1.2.0",
-    "react-native": "0.70.5",
+    "react-native": "0.70.8",
     "react-native-dropdown-select-list": "^2.0.4",
     "react-native-elements": "^3.4.3",
     "react-native-input-select": "^0.18.0",

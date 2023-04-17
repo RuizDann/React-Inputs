@@ -3,102 +3,87 @@ import { StyleSheet, Text, View, SafeAreaView, Button, TextInput, ScrollView } f
 import { DataTable } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { Alert, Share } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import { Platform } from 'react-native';
+import * as FileSystem from 'expo-file-system';
 
-const MatchInfo = ({ route }) => {
+const MatchInfo = ({ navigation, route }) => {
 
-  constructor()
-  {
-    super();
-    this.state = {
-      matchData:[
-        {
-          'weight': route.params.weight,
-        },
-        {
-          'firstNameH': route.params.firstNameH,
-          'lastNameH': route.params.lastNameH,
-          'teamH': route.params.teamH,
-          'isNatQualH': route.params.isNatQualH,
-          'isAllAmerH': route.params.isAllAmerH,
-        },
-        {
-          'firstNameA': route.params.firstNameA,
-          'lastNameA': route.params.lastNameA,
-          'teamA': route.params.teamA,
-          'isNatQualA': route.params.isNatQualA,
-        }
-      ]
-    }
+  // function to save the match info to a csv file
+  const saveMatch = () => {
+    // get the match info from the route params
+    const weight = route.params.weight;
+    const firstNameH = route.params.firstNameH;
+    const lastNameH = route.params.lastNameH;
+    const teamH = route.params.teamH;
+    const isNatQualH = route.params.isNatQualH;
+    const isAllAmerH = route.params.isAllAmerH;
+    const firstNameA = route.params.firstNameA;
+    const lastNameA = route.params.lastNameA;
+    const teamA = route.params.teamA;
+    const isNatQualA = route.params.isNatQualA;
+    const isAllAmerA = route.params.isAllAmerA;
+
+    // create the csv string
+    const csvString = `${weight},${firstNameH},${lastNameH},${teamH},${isNatQualH},${isAllAmerH},${firstNameA},${lastNameA},${teamA},${isNatQualA},${isAllAmerA}\n`;
+
+    // write the csv string to the file
+    FileSystem.writeAsStringAsync(FileSystem.documentDirectory + 'matches.csv', csvString, {
+      encoding: FileSystem.EncodingType.UTF8,
+      append: true
+    })
+      .then(() => {
+        console.log('File written');
+      }
+      )
+      .catch((error) => {
+        console.log(error);
+      }
+      );
+
+      // alert the user that the match was saved
+      Alert.alert( 'Match Saved' );
+
+      //show the created file
+      FileSystem.readAsStringAsync(FileSystem.documentDirectory + 'matches.csv')
+      .then((contents) => {
+        console.log(contents);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      // navigate back to the home screen
+      navigation.navigate('HomeScreen');
+
   }
 
-  ExportToCsv() {
-    var csvRows = [];
-    var A = [['weight', 'firstNameH', 'lastNameH', 'teamH', 'isNatQualH', 'isAllAmerH', 'firstNameA', 'lastNameA', 'teamA', 'isNatQualA', 'isAllAmerA']];
-    var B = this.state.matchData;
-
-    for (var i = 0; i < B.length; ++i) {
-      A.push([B[i].weight, B[i].firstNameH, B[i].lastNameH, B[i].teamH, B[i].isNatQualH, B[i].isAllAmerH, B[i].firstNameA, B[i].lastNameA, B[i].teamA, B[i].isNatQualA, B[i].isAllAmerA]);
-  }
-
-  for (var i = 0; i < A.length; ++i) {
-    csvRows.push(A[i].join(','));
-  }
-
-  var csvString = csvRows.join("%0A");
-  var a = document.createElement('a');
-  a.href = 'data:attachment/csv,' + csvString;
-  a.target = '_Blank';
-  a.download = 'matchData.csv';
-  document.body.appendChild(a);
-  a.click();
-}
-
-
-  // const matchData = [
-  //   { weight: route.params.weight, 
-  //     firstNameH: route.params.firstNameH, 
-  //     lastNameH: route.params.lastNameH, 
-  //     teamH: route.params.teamH, 
-  //     isNatQualH: route.params.isNatQualH, 
-  //     isAllAmerH: route.params.isAllAmerH, 
-  //     firstNameA: route.params.firstNameA, 
-  //     lastNameA: route.params.lastNameA, 
-  //     teamA: route.params.teamA, 
-  //     isNatQualA: route.params.isNatQualA, 
-  //     isAllAmerA: route.params.isAllAmerA }
-  // ];
   return (
+    //display the match info with a save to file button
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, padding: 10 }}>
       <DataTable style={styles.container} >
         <DataTable.Header style={styles.tableHeader}>
           <DataTable.Title style={{ justifyContent: 'center', alignSelf: 'center' }}>Weight Class: {route.params.weight}</DataTable.Title>
         </DataTable.Header>
-        <DataTable.Header style={styles.tableHeader}>
-          <DataTable.Title >First Name</DataTable.Title>
-          <DataTable.Title >Last Name</DataTable.Title>
-          <DataTable.Title >Team</DataTable.Title>
-          <DataTable.Title >Nat Qual</DataTable.Title>
-          <DataTable.Title >All Amer</DataTable.Title>
-        </DataTable.Header>
-        <DataTable.Header style={styles.tableData}>
-          <DataTable.Title >{route.params.firstNameH}</DataTable.Title>
-          <DataTable.Title >{route.params.lastNameH}</DataTable.Title>
-          <DataTable.Title >{route.params.teamH}</DataTable.Title>
-          <DataTable.Title >{route.params.isNatQualH}</DataTable.Title>
-          <DataTable.Title >{route.params.isAllAmerH}</DataTable.Title>
-        </DataTable.Header>
-        <DataTable.Header style={styles.tableData}>
-          <DataTable.Title >{route.params.firstNameA}</DataTable.Title>
-          <DataTable.Title >{route.params.lastNameA}</DataTable.Title>
-          <DataTable.Title >{route.params.teamA}</DataTable.Title>
-          <DataTable.Title >{route.params.isNatQualA}</DataTable.Title>
-          <DataTable.Title >{route.params.isAllAmerA}</DataTable.Title>
-        </DataTable.Header>
-        <DataTable.Cell style={{ justifyContent: 'center', alignSelf: 'center' }}>
-          {/* button onpress save matchData to a file */}
-          <Button title="Save Match Data" onPress={this.ExportToCsv} />
-        </DataTable.Cell>
+        <DataTable.Row style={styles.tableData}>
+          <DataTable.Cell style={{ justifyContent: 'center', alignSelf: 'center' }}>{route.params.firstNameH} {route.params.lastNameH}</DataTable.Cell>
+          <DataTable.Cell style={{ justifyContent: 'center', alignSelf: 'center' }}>{route.params.teamH}</DataTable.Cell>
+          <DataTable.Cell style={{ justifyContent: 'center', alignSelf: 'center' }}>{route.params.isNatQualH}</DataTable.Cell>
+          <DataTable.Cell style={{ justifyContent: 'center', alignSelf: 'center' }}>{route.params.isAllAmerH}</DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row style={styles.tableData}>
+          <DataTable.Cell style={{ justifyContent: 'center', alignSelf: 'center' }}>{route.params.firstNameA} {route.params.lastNameA}</DataTable.Cell>
+          <DataTable.Cell style={{ justifyContent: 'center', alignSelf: 'center' }}>{route.params.teamA}</DataTable.Cell>
+          <DataTable.Cell style={{ justifyContent: 'center', alignSelf: 'center' }}>{route.params.isNatQualA}</DataTable.Cell>
+          <DataTable.Cell style={{ justifyContent: 'center', alignSelf: 'center' }}>{route.params.isAllAmerA}</DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row style={styles.tableData}>
+          <DataTable.Cell style={{ justifyContent: 'center', alignSelf: 'center' }}><Button title="Save Match" onPress={saveMatch} /></DataTable.Cell>
+        </DataTable.Row>
 
       </DataTable>
       </View>
