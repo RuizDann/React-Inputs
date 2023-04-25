@@ -8,6 +8,7 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Checkbox from 'expo-checkbox';
 import Stopwatch from './Stopwatch';
+import TimePicker from 'react-time-picker';
 
 export default function EventPage({ route, navigation, props }) {
   
@@ -73,10 +74,15 @@ export default function EventPage({ route, navigation, props }) {
       setFinalTime(timeElapsed);
     }
 
+    // time text inputs
+
+
     //number inputs
     const [period, setPeriod] = React.useState(1);
     const [ridingTime, setRidingTime] = React.useState(0);
     const [overtime, setOvertime] = React.useState(false);
+    const [minTime, setMinTime] = React.useState(0);
+    const [secTime, setSecTime] = React.useState(0);
 
     //dropdowns
     const [open, setOpen] = React.useState(false);
@@ -124,7 +130,29 @@ export default function EventPage({ route, navigation, props }) {
             </View>
           </SafeAreaView>
             <View style={styles.timeTop}>
-              <Stopwatch onStop={handleStopwatchStop} currentTime={finalTime}/>
+                <Text>Time</Text>
+                <View style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'center', width: '80%'}}>
+                {/* text input for time in minutes */}
+                
+                <TextInput input="numeric"
+                    keyboardType="numeric"
+                    style={{backgroundColor: 'lightblue', fontColor: 'black'}}
+                    textAlign="center"
+                    value={minTime}
+                    onChangeText={(minTime) => setMinTime(minTime)}
+                    placeholder=" Min "
+                    />
+                    <Text>:</Text>
+                {/* text input for seconds */}
+                <TextInput input="numeric"
+                    keyboardType="numeric"
+                    style={{backgroundColor: 'lightblue', fontColor: 'black'}}
+                    textAlign="center"
+                    value={secTime}
+                    onChangeText={(secTime) => setSecTime(secTime)}
+                    placeholder="Sec "
+                    />
+                </View>
             </View>
 
             <View style={styles.positionInput}>
@@ -156,7 +184,7 @@ export default function EventPage({ route, navigation, props }) {
                   textAlign="center"
                   value={ridingTime}
                   onChangeText={(ridingTime) => setRidingTime(ridingTime)}
-                  defaultValue="0"
+                  placeholder='0'
                 />
 
               </View>
@@ -172,7 +200,7 @@ export default function EventPage({ route, navigation, props }) {
                   textAlign="center"
                   value={period}
                   onChangeText={(period) => setPeriod(period)}
-                  defaultValue="1"
+                    placeholder='1'
                 />
 
               </View>
