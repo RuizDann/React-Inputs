@@ -5,7 +5,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import Svg, { Circle, Rect, AreaChart, Grid, Line, PolyLine } from 'react-native-svg';
 import { SelectList } from 'react-native-dropdown-select-list';
-import Stopwatch from './Stopwatch';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Checkbox from 'expo-checkbox';
 

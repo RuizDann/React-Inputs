@@ -11,11 +11,11 @@ import {
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Checkbox from 'expo-checkbox';
-import * as ScreenOrientation from 'expo-screen-orientation';
+// import * as ScreenOrientation from 'expo-screen-orientation';
 
 const NewMatch = ({ navigation }) => {
 
-  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+//   ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
 
   const [firstNameH, setFirstNameH] = useState('home first name');
   const [firstNameA, setFirstNameA] = useState('away first name');
@@ -73,7 +73,6 @@ const NewMatch = ({ navigation }) => {
       contentContainerStyle={styles.container}
       keyboardShouldPersistTaps="handled">
       <View style={styles.mainSection}>
-      
         <View style={styles.dropdownSection}>
         <DropDownPicker
           open={openWeight}
@@ -147,11 +146,9 @@ const NewMatch = ({ navigation }) => {
 
         <View style={styles.checkboxContainer}>
           <Text>National Qualifier?</Text>
-          <Checkbox style={{marginLeft: 25}} value={isNatQualA} onValueChange={setNatQualA} />
-          <Text>All American?</Text>
-          <Checkbox style={{marginLeft: 25}} value={isAllAmerA} onValueChange={setAllAmerA} />
-          <Text>Is CheckBox selected: {isAllAmerA ? '👍' : '👎'}</Text>
-
+            <Checkbox style={{marginLeft: 25}} value={isNatQualA} onValueChange={(isNatQualA) => setNatQualA(isNatQualA)} />
+            <Text>All American?</Text>
+            <Checkbox style={{marginLeft: 25}} value={isAllAmerA} onValueChange={(isAllAmerA) => setAllAmerA(isAllAmerA)} />
         </View>
 
         <View style={{padding: 20}}>
@@ -196,22 +193,20 @@ const NewMatch = ({ navigation }) => {
           title="Submit"
           onPress={() =>
             navigation.navigate('MatchInfo', {
-              weight: weightValue,
-              firstNameH: firstNameH,
-              lastNameH: lastNameH,
-              teamH: teamH,
-              isNatQualH: isNatQualH,
-              isAllAmerH: isAllAmerH,
-
-              firstNameA: firstNameA,
-              lastNameA: lastNameA,
-              teamA: teamA,
-              isNatQualA: isNatQualA,
-              isAllAmerA: isAllAmerA,
-
-              eventName: eventName,
-              eventType: eventTypeValue,
-              match: matchTypeValue,
+                weight: weightValue,
+                firstNameH: firstNameH,
+                lastNameH: lastNameH,
+                teamH: teamH,
+                firstNameA: firstNameA,
+                lastNameA: lastNameA,
+                teamA: teamA,
+                eventName: eventName,
+                eventType: eventTypeValue,
+                matchType: matchTypeValue,
+                isNatQualH: isNatQualH,
+                isAllAmerH: isAllAmerH,
+                isNatQualA: isNatQualA,
+                isAllAmerA: isAllAmerA,
             })
           }
         />
