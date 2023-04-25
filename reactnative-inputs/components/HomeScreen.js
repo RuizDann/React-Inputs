@@ -10,27 +10,12 @@ export default function HomeScreen({ navigation }) {
       <Button title="Create New Match" onPress={() => navigation.navigate('NewMatch')}/>
     </View>
   );
-}a
+}
 
 const styles = StyleSheet.create({
-  container: {
-    height: '15%',
-    backgroundColor: 'skyblue',
-    alignItems: "center",
-    justifyContent: "center",
-
-  },
   mainSection: {
     height: '80%',
     alignItems: "center", 
     justifyContent: "center"
-  },
-  titleText: {
-    alignItems: "center",
-    fontFamily: "Arial",
-    font: "Arial Black",
-    fontWeight: "bold",
-    fontSize: 30,
-    color: "white",
   }
 });

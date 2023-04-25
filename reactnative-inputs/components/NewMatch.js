@@ -1,237 +1,276 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Button, TextInput, ScrollView } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Picker } from '@react-native-picker/picker';
-import { SelectList } from 'react-native-dropdown-select-list';
+import React, { useState, useCallback } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Button,
+  TextInput,
+  ScrollView,
+  StatusBar, DatePickerIOS,
+} from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 import Checkbox from 'expo-checkbox';
-import { weightClasses } from './LorasData';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
-const NewMatch = ( { navigation } ) => {
-    const [firstNameH, setFirstNameH] = useState('home first name');
-    const [firstNameA, setFirstNameA] = useState('first name');
-    const [lastNameH, setLastNameH] = useState('home last name');
-    const [lastNameA, setLastNameA] = useState('last name');
-    const [teamH, setTeamH] = useState('home team');
-    const [teamA, setTeamA] = useState('away team');
-    const [weight, setWeight] = useState('weight class');
-    const [isNatQualH, setNatQualH] = useState('NO');
-    const [isAllAmerH, setAllAmerH] = useState('NO');
-    const [isNatQualA, setNatQualA] = useState('NO');
-    const [isAllAmerA, setAllAmerA] = useState('NO');
+const NewMatch = ({ navigation }) => {
 
-    return (
-    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps='handled'>
-        <View style={styles.mainSection}>
-            <SelectList 
-                setSelected={(weight) => setWeight(weight)}
-                data={weightClasses}
-                save="value"
-                placeholder={"Weight Class"}
-                boxStyles={{
-                    width: 150, 
-                    height: 45, 
-                    backgroundColor: 'transparent', 
-                    borderRadius: 0, 
-                    borderWidth: 1, 
-                    borderColor: 'black', 
-                    margin: 20,
-                }}
-            />
+  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+
+  const [firstNameH, setFirstNameH] = useState('home first name');
+  const [firstNameA, setFirstNameA] = useState('away first name');
+  const [lastNameH, setLastNameH] = useState('home last name');
+  const [lastNameA, setLastNameA] = useState('away last name');
+
+  const [eventName, setEventName] = useState('event name');
+
+  const [teamH, setTeamH] = useState('home team');
+  const [teamA, setTeamA] = useState('away team');
+
+  const [weight, setWeight] = useState([
+    { label: '125', value: '125' },
+    { label: '133', value: '133' },
+    { label: '141', value: '141' },
+    { label: '149', value: '149' },
+    { label: '157', value: '157' },
+    { label: '165', value: '165' },
+    { label: '174', value: '174' },
+    { label: '184', value: '184' },
+    { label: '197', value: '197' },
+    { label: 'HWT', value: 'HWT' },
+  ]);
+
+  const [match, setMatch] = useState([
+    { label: 'Varsity', value: 'Varsity' },
+    { label: 'JV', value: 'JV' },
+  ]);
+
+  const [eventMenu, setEvent] = useState([
+    { label: 'Tournament', value: 'Tournament' },
+    { label: 'Dual', value: 'Dual' },
+    { label: 'Exhibition', value: 'Exhibition'},
+  ]);
+
+  const [chosenDate, setChosenDate] = useState(new Date());
+
+  const [isNatQualH, setNatQualH] = useState(false);
+  const [isAllAmerH, setAllAmerH] = useState(false);
+  const [isNatQualA, setNatQualA] = useState(false);
+  const [isAllAmerA, setAllAmerA] = useState(false);
+
+  //dropdowns
+  const [openWeight, setOpenWeight] = useState(false);
+  const [weightValue, setWeightValue] = useState(null);
+
+  const [openMatch, setOpenMatch] = useState(false);
+  const [matchTypeValue, setMatchTypeValue] = useState(null);
+
+  const [openEvent, setOpenEvent] = useState(false);
+  const [eventTypeValue, setEventTypeValue] = useState(null);
+
+  return (
+    <ScrollView
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled">
+      <View style={styles.mainSection}>
+      
+        <View style={styles.dropdownSection}>
+        <DropDownPicker
+          open={openWeight}
+          value={weightValue}
+          items={weight}
+          setOpen={setOpenWeight}
+          setValue={setWeightValue}
+          setItems={setWeight}
+          zIndex={5000}
+          zIndexInverse={1000}
+          dropDownDirection="AUTO"
+          placeholder="Select Weight Class"
+        /></View>
+
+        <Text style={styles.titleText}>Home Wrestler</Text>
+
+        <TextInput
+          onChangeText={(firstNameH) => setFirstNameH(firstNameH)}
+          placeholder={'First Name'}
+          style={styles.input}
+          placeholderTextColor="black"
+          textAlign="center"
+        />
+
+        <TextInput
+          onChangeText={(lastNameH) => setLastNameH(lastNameH)}
+          placeholder={'Last Name'}
+          style={styles.input}
+          placeholderTextColor="black"
+          textAlign="center"
+        />
+
+        <TextInput
+          onChangeText={(teamH) => setTeamH(teamH)}
+          placeholder={'Team'}
+          style={styles.input}
+          placeholderTextColor="black"
+          textAlign="center"
+        />
+        <View style={styles.checkboxContainer}>
+          <Text>National Qualifier?</Text>
+          <Checkbox style={{marginLeft: 25}} value={isNatQualH} onValueChange={(isNatQualH) => setNatQualH(isNatQualH)} />
+          <Text>All American?</Text>
+          <Checkbox style={{marginLeft: 25}} value={isAllAmerH} onValueChange={(isAllAmerH) => setAllAmerH(isAllAmerH)} />
+        </View>
+        <Text style={styles.titleText}>Opponent Wrestler</Text>
+
+        <TextInput
+          onChangeText={(firstNameA) => setFirstNameA(firstNameA)}
+          placeholder={'First Name'}
+          style={styles.input}
+          placeholderTextColor="black"
+          textAlign="center"
+        />
+
+        <TextInput
+          onChangeText={(lastNameA) => setLastNameA(lastNameA)}
+          placeholder={'Last Name'}
+          style={styles.input}
+          placeholderTextColor="black"
+          textAlign="center"
+        />
+
+        <TextInput
+          onChangeText={(teamA) => setTeamA(teamA)}
+          placeholder={'Team'}
+          style={styles.input}
+          placeholderTextColor="black"
+          textAlign="center"
+        />
+
+        <View style={styles.checkboxContainer}>
+          <Text>National Qualifier?</Text>
+          <Checkbox style={{marginLeft: 25}} value={isNatQualA} onValueChange={setNatQualA} />
+          <Text>All American?</Text>
+          <Checkbox style={{marginLeft: 25}} value={isAllAmerA} onValueChange={setAllAmerA} />
+          <Text>Is CheckBox selected: {isAllAmerA ? '👍' : '👎'}</Text>
+
+        </View>
+
+        <View style={{padding: 20}}>
+        <TextInput
+          onChangeText={(eventName) => setEventName(eventName)}
+          placeholder={'Event Name'}
+          style={styles.input}
+          placeholderTextColor="black"
+          textAlign="center"
+        />
+        </View>
+        <View style={styles.dropdownSection}>
+        <DropDownPicker
+          open={openEvent}
+          value={eventTypeValue}
+          items={eventMenu}
+          setOpen={setOpenEvent}
+          setValue={setEventTypeValue}
+          setItems={setEvent} 
+          zIndex={4000}
+          zIndexInverse={2000}
+          dropDownDirection="AUTO"
+          placeholder="Event Type"
+        />
+        </View>
+        <View style={styles.dropdownSection}>
+        <DropDownPicker
+          open={openMatch}
+          value={matchTypeValue}
+          items={match}
+          setOpen={setOpenMatch}
+          setValue={setMatchTypeValue}
+          setItems={setMatch} 
+          zIndex={5000}
+          zIndexInverse={3000}
+          dropDownDirection="TOP"
+          placeholder="Match Type"
+        />
         </View>
         
-        <Text style={styles.titleText}>Home Wrestler</Text>
-        <View style={styles.mainSection}>
-        <TextInput 
-            onChangeText={(firstNameH) => setFirstNameH(firstNameH)}
-            placeholder={'First Name'}
-            style={styles.input}
-            placeholderTextColor='black'
-            textAlign='center'
-        />
+        <Button
+          title="Submit"
+          onPress={() =>
+            navigation.navigate('MatchInfo', {
+              weight: weightValue,
+              firstNameH: firstNameH,
+              lastNameH: lastNameH,
+              teamH: teamH,
+              isNatQualH: isNatQualH,
+              isAllAmerH: isAllAmerH,
 
-        <TextInput 
-            onChangeText={(lastNameH) => setLastNameH(lastNameH)}
-            placeholder={'Last Name'}
-            style={styles.input}
-            placeholderTextColor='black'
-            textAlign='center'
-        />
+              firstNameA: firstNameA,
+              lastNameA: lastNameA,
+              teamA: teamA,
+              isNatQualA: isNatQualA,
+              isAllAmerA: isAllAmerA,
 
-        <TextInput
-            onChangeText={(teamH) => setTeamH(teamH)}
-            placeholder={"Team"}
-            style={styles.input}
-            placeholderTextColor="black"
-            textAlign="center"
-        />
-
-        <SelectList 
-                setSelected={(isNatQualH) => setNatQualH(isNatQualH)}
-                data={[{label: 'YES', value: 'YES'}, {label: 'NO', value: 'NO'}]}
-                save="value"
-                placeholder={'National Qualifier?'}
-                boxStyles={{
-                    width: 150, 
-                    height: 45, 
-                    backgroundColor: 'transparent', 
-                    borderRadius: 0, 
-                    borderWidth: 1, 
-                    borderColor: 'black', 
-                    margin: 20,
-                }}
-            />
-        <SelectList 
-                setSelected={(isAllAmerH) => setAllAmerH(isAllAmerH)}
-                data={[{label: 'YES', value: 'YES'}, {label: 'NO', value: 'NO'}]}
-                save="value"
-                placeholder={'All American?'}
-                boxStyles={{
-                    width: 150, 
-                    height: 45, 
-                    backgroundColor: 'transparent', 
-                    borderRadius: 0, 
-                    borderWidth: 1, 
-                    borderColor: 'black', 
-                    margin: 20,
-                }}
-            />
-      </View>
-
-      <Text style={styles.titleText}>Opponent</Text>
-      <View style={styles.mainSection}>
-        <TextInput 
-            onChangeText={(firstNameA) => setFirstNameA(firstNameA)}
-            placeholder={'First Name'}
-            style={styles.input}
-            placeholderTextColor='black'
-            textAlign='center'
-        />
-
-        <TextInput 
-            onChangeText={(lastNameA) => setLastNameA(lastNameA)}
-            placeholder={'Last Name'}
-            style={styles.input}
-            placeholderTextColor='black'
-            textAlign='center'
-        />
-
-        <TextInput
-            onChangeText={(teamA) => setTeamA(teamA)}
-            placeholder={"Team"}
-            style={styles.input}
-            placeholderTextColor="black"
-            textAlign="center"
-        />
-
-        <SelectList 
-                setSelected={(isNatQualA) => setNatQualA(isNatQualA)}
-                data={[{label: 'YES', value: 'YES'}, {label: 'NO', value: 'NO'}]}
-                save="value"
-                placeholder={'National Qualifier?'}
-                boxStyles={{
-                    width: 150, 
-                    height: 45, 
-                    backgroundColor: 'transparent', 
-                    borderRadius: 0, 
-                    borderWidth: 1, 
-                    borderColor: 'black', 
-                    margin: 20,
-                }}
-            />
-        <SelectList 
-                setSelected={(isAllAmerA) => setAllAmerA(isAllAmerA)}
-                data={[{label: 'YES', value: 'YES'}, {label: 'NO', value: 'NO'}]}
-                save="value"
-                placeholder={'All American?'}
-                boxStyles={{
-                    width: 150, 
-                    height: 45, 
-                    backgroundColor: 'transparent', 
-                    borderRadius: 0, 
-                    borderWidth: 1, 
-                    borderColor: 'black', 
-                    margin: 20,
-                }}
-            />
-      </View>
-
-      <Button title="Submit" onPress={() => navigation.navigate('MatchInfo', {
-            weight: weight,
-            firstNameH: firstNameH,
-            lastNameH: lastNameH,
-            teamH: teamH,
-            isNatQualH: isNatQualH,
-            isAllAmerH: isAllAmerH,
-
-            firstNameA: firstNameA,
-            lastNameA: lastNameA,
-            teamA: teamA,
-            isNatQualA: isNatQualA,
-            isAllAmerA: isAllAmerA,
+              eventName: eventName,
+              eventType: eventTypeValue,
+              match: matchTypeValue,
             })
-        }
-    />
+          }
+        />
+      </View>
     </ScrollView>
-    );
+  );
 };
 
 export default NewMatch;
 
-  const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'lightgray',
-        alignItems: 'center',
-    },
-
-    mainSection: {
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        alignItems: 'center', 
-        gap: '10rem',
-        justifyContent: 'center',
-    },
-
-    titleText: {
-        height: '8%', 
-        padding: 20,
-        fontFamily: 'Arial',
-        font: 'Arial Black',
-        fontWeight: 'bold',
-        fontSize: 20,
-        
-    },
-
-    input: {
-        alignItems: 'stretch',
-        width: 150,
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-        fontColor: 'black',
-      },
-
-    checkInput: {
-        alignItems: 'stretch',
-        width: 150,
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-        fontColor: 'black',
-        flexDirection: 'row',
-    },
-
-    picker: {
-        justifyContent: 'center',
-        alignItems: 'stretch',
-        flexDirection: 'column-wrap',
-        width: 300,
-        height: 100,
-        marginVertical: 30,
-        borderWidth: 1,
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    backgroundColor: 'lightgray',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 15,
   },
 
-  });
+  mainSection: {
+    flex: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+  },
+
+  titleText: {
+    padding: 20,
+    fontFamily: 'Arial', 
+    font: 'Arial Black',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+
+  input: {
+    width: 125,
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    fontColor: 'black',
+  },
+
+  dropdownSection: {
+    width: 140,
+    height: 40,
+    margin: 12,
+    zIndex: 1,
+  },
+
+  checkboxContainer: {
+
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

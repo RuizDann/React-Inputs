@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
 
 export default function Button({ label }) {
@@ -27,9 +26,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-  },
-  buttonIcon: {
-    paddingRight: 8,
   },
   buttonLabel: {
     color: '#fff',

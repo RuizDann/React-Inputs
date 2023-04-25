@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './components/HomeScreen.js';
 import NewMatch from './components/NewMatch.js';
 import MatchInfo from './components/MatchInfo.js';
+import EventPage from './components/EventPage.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,7 +13,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{title: 'Wrestling Statistics',
-         headerStyle: {backgroundColor: 'skyblue'},
+         headerStyle: {backgroundColor: 'darkgray'},
          headerTintColor: 'white',
          headerTitleStyle: {fontWeight: 'bold'},}}>
         <Stack.Screen name="HomeScreen"
@@ -22,6 +23,7 @@ function App() {
          />
         <Stack.Screen name="NewMatch" component={NewMatch} options={{title: "Create Match"}}/>
         <Stack.Screen name="MatchInfo" component={MatchInfo} options={{title: "Current Match Information"}}/>
+        <Stack.Screen name="EventPage" component={EventPage}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
