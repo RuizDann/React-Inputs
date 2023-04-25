@@ -7,9 +7,7 @@ import Svg, { Circle, Rect, AreaChart, Grid, Line, PolyLine } from 'react-native
 import { SelectList } from 'react-native-dropdown-select-list';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Checkbox from 'expo-checkbox';
-
-// import Graph from './Graph.js'
-
+import Stopwatch from './Stopwatch';
 
 export default function EventPage({ route, navigation, props }) {
   
@@ -66,7 +64,6 @@ export default function EventPage({ route, navigation, props }) {
       {label: "A", value: "A"}
     ]);
 
-
     const [selectedPos, setSelectedPos] = React.useState("");
     const [selectedOfAction, setSelectedOfAction] = React.useState("");
   
@@ -97,8 +94,6 @@ export default function EventPage({ route, navigation, props }) {
     const [openScore, setOpenScore] = React.useState(false);
     const [valueScore, setValueScore] = React.useState(null);
 
-
-
     const handlePosition = (value) => {
       setPositionType(value);
       if(value == "Neutral")
@@ -125,7 +120,7 @@ export default function EventPage({ route, navigation, props }) {
           <SafeAreaView style={styles.matchInfo}>
             <View style={{marginTop: 5}}>
               <Text>Match Summary</Text>
-              <Text style={{alignItems: 'center'}}>{route.params.paramLastH} VS {route.params.paramLastA}</Text>
+              <Text style={{alignItems: 'center'}}>{route.params.lastNameH} VS {route.params.lastNameA}</Text>
             </View>
           </SafeAreaView>
             <View style={styles.timeTop}>
@@ -187,19 +182,10 @@ export default function EventPage({ route, navigation, props }) {
               <Text>Overtime</Text>
               <View style={{width:"20%", justifyContent: 'center'}}>
 
-                {/* <TextInput input="numeric" 
-                  keyboardType="numeric" 
-                  style={{backgroundColor: 'lightblue', fontColor: 'black'}} 
-                  textAlign="center"
-                  value={overtime}
-                  onChangeText={(overtime) => setOvertime(overtime)}
-                /> */}
                 <Checkbox value={overtime} onValueChange={setOvertime}/> 
               
-
               </View>
             </View>
-
 
           </View>
           </TouchableWithoutFeedback>
@@ -223,12 +209,9 @@ const [actionType, setActionType] = React.useState('');
 const [resultType, setResultType] = React.useState('');
 const [currScoreType, setCurrScoreType] = React.useState('');
 
-
 const [circlePositions, setCirclePositions] = React.useState([]);
 const [localCircles, setLocalCircles] = React.useState(circlePositions);
 const [circleColor, setCircleColor] = React.useState('red');
-
-
 
 const addElement = () => { //adds element to list
   if(offensiveAction != '' && actionType != '' && localCircles.length%2 == 0 && localCircles.length/2 == events.length+1)//if input is not null
@@ -326,11 +309,28 @@ const deleteLastCircle = () => {
     setCirclePositions(newCircles);
     }
 
-    
   };
 
-
-
+  //function to convert list to csv file
+    const convertArrayOfObjectsToCSV = (array) => {
+        let result; //variable to store csv file
+        const columnDelimiter = ","; //delimiter for columns
+        const lineDelimiter = "\n"; //delimiter for rows
+        const keys = Object.keys(events[0]); //keys for each column
+        result = "";
+        result += keys.join(columnDelimiter);
+        result += lineDelimiter;
+        array.forEach((item) => {
+            let ctr = 0;
+            keys.forEach((key) => {
+                if (ctr > 0) result += columnDelimiter;
+                result += item[key];
+                ctr++;
+            });
+            result += lineDelimiter;
+        });
+        return result;
+    };
 
   return (
 

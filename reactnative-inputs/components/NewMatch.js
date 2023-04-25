@@ -192,7 +192,7 @@ const NewMatch = ({ navigation }) => {
         <Button
           title="Submit"
           onPress={() =>
-            navigation.navigate('MatchInfo', {
+            navigation.navigate('EventPage', {
                 weight: weightValue,
                 firstNameH: firstNameH,
                 lastNameH: lastNameH,

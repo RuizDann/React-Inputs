@@ -43,6 +43,7 @@ const MatchInfo = ({ navigation, route }) => {
 
   // create the csv string
   const csvString = `${weight},${firstNameH},${lastNameH},${teamH},${isNatQualHNum},${isAllAmerHNum},${firstNameA},${lastNameA},${teamA},${isNatQualANum},${isAllAmerANum},${eventName},${eventType},${matchType}\n`;
+  // eventName,eventType,eventDate,,homeFirstName,homeLastName,homeTeam,homeIsNatQual,homeIsAllAmer,awayFirstName,awayLastName,awayTeam,awayIsNatQual,awayIsAllAmer,weightClass,matchType\n`;
 
   // create the file name
   const title = `${weight}-${firstNameH}${lastNameH}vs${firstNameA}${lastNameA}`;
