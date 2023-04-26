@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, Button, TextInput, ScrollView, To
 import Checkbox from 'expo-checkbox';
 import DropDownPicker from 'react-native-dropdown-picker';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import { CheckBox } from 'react-native-elements/dist/checkbox/CheckBox';
 
 export default function NewMatch( { navigation, route }, props ) {
 
@@ -10,8 +11,8 @@ export default function NewMatch( { navigation, route }, props ) {
     const [firstH, setFirstH] = useState('');
     const [lastH, setLastH] = useState('');
     const [teamH, setTeamH] = useState('');
-    const [allAmerH, setAllAmerH] = useState(false);
     const [natQualH, setNatQualH] = useState(false);
+    const [allAmerH, setAllAmerH] = useState(false);
     const [firstA, setFirstA] = useState('');
     const [lastA, setLastA] = useState('');
     const [teamA, setTeamA] = useState('');
@@ -46,13 +47,13 @@ export default function NewMatch( { navigation, route }, props ) {
           firstNameH: firstH,
           lastNameH: lastH,
           teamH: teamH,
-          allAmerH: allAmerH,
-          natQualH: natQualH,
+          allAmerH: allAmerH ? 1 : 0,
+          natQualH: natQualH ? 1 : 0,
           firstNameA: firstA,
           lastNameA: lastA,
           teamA: teamA,
-          allAmerA: allAmerA,
-          natQualA: natQualA,
+          allAmerA: allAmerA ? 1 : 0,
+          natQualA: natQualA ? 1 : 0,
           weight: weightValue,
           matchType: matchTypeValue,
         }];
@@ -117,7 +118,8 @@ export default function NewMatch( { navigation, route }, props ) {
             
             <View style={styles.checkInput}>
             <Text  style={{color:'white'}}>NAT QUAL</Text>
-            <Checkbox style={{marginLeft: 25}} value={natQualH} onValueChange={setNatQualH}/> 
+            {/* checkbox that passes the value as 1 or 0 */}
+            <Checkbox style={{marginLeft: 25}} value={natQualH} onValueChange={setNatQualH}/>
             </View>
             <View style={styles.checkInput}>
             <Text style={{color:'white'}}>All American</Text>
