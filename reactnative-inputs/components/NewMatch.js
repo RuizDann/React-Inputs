@@ -7,17 +7,6 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 export default function NewMatch( { navigation, route }, props ) {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
 
-    // setFirstH(null);
-        // setLastH(null);
-        // setTeamH(null);
-        // setAllAmerH(false);
-        // setNatQualH(false);
-        // setFirstA(null);
-        // setLastA(null);
-        // setTeamA(null);
-        // setAllAmerA(false);
-        // setNatQualA(false);
-
     const [totalWrestlerInfo, changeTotalWrestlerInfo] = React.useState(route.params.allWrestlerInfo);
     const [firstH, setFirstH] = useState('');
     const [lastH, setLastH] = useState('');
@@ -52,7 +41,6 @@ export default function NewMatch( { navigation, route }, props ) {
     const [openMatchType, setOpenMatchType] = useState(false);
     const [matchTypeValue, setMatchTypeValue] = useState(null);
 
-    console.log(firstH);
     const saveData = () => {
 
         var wrestlerInfo = [...totalWrestlerInfo, {
@@ -108,7 +96,6 @@ export default function NewMatch( { navigation, route }, props ) {
                 value={firstH}
                 onChangeText={(firstH) => setFirstH(firstH)}
                 borderColor = 'white'
-                
             />
             <TextInput 
                 style={styles.input}
@@ -148,7 +135,6 @@ export default function NewMatch( { navigation, route }, props ) {
                 value={firstA}
                 onChangeText={(firstA) => setFirstA(firstA)}
                 borderColor = 'white'
-               
             />
             <TextInput 
                 style={styles.input}
@@ -214,11 +200,8 @@ export default function NewMatch( { navigation, route }, props ) {
           </View><View style={styles.buttonBorder}>
               <Button color="black" title="Submit" onPress={() => {saveData()}}/>
             </View>
-          
-           
         </View>
       </TouchableWithoutFeedback>
-        
     )
   }
     
@@ -227,8 +210,6 @@ export default function NewMatch( { navigation, route }, props ) {
             flex: 1,
             backgroundColor: '#2D3142',
             alignItems: 'center',
-            
-            
         },
         mainSection: {
             flexWrap: 'wrap',
