@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  Button,
-  TextInput,
-} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, Text, View, SafeAreaView, Button, TextInput } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import moment from 'moment';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 export default function HomeScreen({ route, navigation, props }) {
-  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+
   const [myArray, setMyArray] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
   const [allWrestlerInfo, setAllWrestlerInfo] = useState([]);
@@ -81,7 +72,7 @@ export default function HomeScreen({ route, navigation, props }) {
 
   return (
     <View style={styles.mainSection}>
-      <View style={{ height: '90%', backgroundColor: '#2D3142' }}>
+      <View style={{ height: '90%', backgroundColor: '#2D3142', paddingTop: '10%' }}>
         <View style={{ justifyContent: 'center' }}>
           <View style={styles.textSection}>
             <TextInput

@@ -5,7 +5,6 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 export default function NewMatch( { navigation, route }, props ) {
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
 
     const [totalWrestlerInfo, changeTotalWrestlerInfo] = React.useState(route.params.allWrestlerInfo);
     const [firstH, setFirstH] = useState('');
@@ -210,6 +209,7 @@ export default function NewMatch( { navigation, route }, props ) {
             flex: 1,
             backgroundColor: '#2D3142',
             alignItems: 'center',
+            paddingTop: '10%',
         },
         mainSection: {
             flexWrap: 'wrap',

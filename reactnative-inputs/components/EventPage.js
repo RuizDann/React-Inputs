@@ -6,7 +6,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Checkbox from 'expo-checkbox';
 
 export default function EventPage({ route, navigation, props }) {
-
+  
     const [periodH, setPeriodH] = React.useState('1');
     const [otH, setOtH] = React.useState(false);
     const [currentPos, setCurrentPos] = React.useState([]);
@@ -67,9 +67,6 @@ export default function EventPage({ route, navigation, props }) {
     const [selectedOfAction, setSelectedOfAction] = React.useState("");
   
     const [finalTime, setFinalTime] = React.useState(0);
-    function handleStopwatchStop(timeElapsed) {
-      setFinalTime(timeElapsed);
-    }
 
     //number inputs
     const [period, setPeriod] = React.useState(1);
@@ -111,15 +108,14 @@ export default function EventPage({ route, navigation, props }) {
       }
     };
 
-    const [minute, setMinute] = useState(null);
     const [textInputValue, setTextInputValue] = useState("");
   
-    const minuteValues = [
+    const [minuteValues, setMinute] = useState([
       { label: '0', value: '0' },
       { label: '1', value: '1' },
       { label: '2', value: '2' },
       { label: '3', value: '3' },
-    ];
+    ]);
   
     const handleMinuteChange = (minute) => {
       setMinute(minute);
@@ -140,6 +136,14 @@ export default function EventPage({ route, navigation, props }) {
       }
     };
 
+    // generate the final time in seconds from the minutes and seconds input
+    const generateFinalTime = () => {
+      let minutes = parseInt(minuteValue);
+      let seconds = parseInt(textInputValue);
+      let finalTime = minutes * 60 + seconds;
+      setFinalTime(finalTime);
+    };
+
   //Setup Header
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -148,7 +152,7 @@ export default function EventPage({ route, navigation, props }) {
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.topSection}>
           <SafeAreaView style={styles.matchInfo}>
-            <View style={{marginTop: 5}}>
+            <View style={{paddingVertical: '5%'}}>
               <Text style={{color: 'white'}}>Match Summary</Text>
               <Text style={{alignItems: 'center', color:'white'}}>{route.params.paramLastH} VS {route.params.paramLastA}</Text>
             </View>
@@ -162,10 +166,10 @@ export default function EventPage({ route, navigation, props }) {
                   justifyContent: 'center',
                   width: '80%',
                 }}>
-                {/* dropdown for munites */}
+                {/* dropdown for minutes */}
                 <View style={{height:50}}>
                 <DropDownPicker
-                style={{borderRadius:0}}
+                  style={{ borderRadius: 0 }}
                   open={openMinutes}
                   value={minuteValue}
                   items={minuteValues}
@@ -181,7 +185,7 @@ export default function EventPage({ route, navigation, props }) {
                   <TextInput
                     input="numeric"
                     keyboardType="numeric"
-                    style={{ backgroundColor: 'white', fontColor: 'black', width: '50%', height: 50, margin: 5, alignItems: "center", justifyContent: "center" }}
+                    style={{ backgroundColor: 'white', fontColor: 'black', width: '50%', height: 50, marginHorizontal: 5, alignItems: "center", justifyContent: "center" }}
                     textAlign="center"
                     placeholder="00"
                     placeholderTextColor = 'black'
@@ -191,7 +195,7 @@ export default function EventPage({ route, navigation, props }) {
                 )}
                 {minuteValue === '3' && (
                   <TextInput
-                    style={{ backgroundColor: 'white', fontColor: 'black', width: '50%', height: 50, margin: 5, alignItems: "center", justifyContent: "center" }}
+                    style={{ backgroundColor: 'white', fontColor: 'black', width: '50%', height: 50, marginHorizontal: 5, alignItems: "center", justifyContent: "center" }}
                     textAlign="center"
                     editable={false}
                     placeholder = "00"
@@ -236,6 +240,7 @@ export default function EventPage({ route, navigation, props }) {
                   placeholder="0"
                   placeholderTextColor="black"
                 />
+
               </View>
             </View>
 
@@ -261,7 +266,6 @@ export default function EventPage({ route, navigation, props }) {
                 <Checkbox style={{backgroundColor:'white'}} value={overtime} onValueChange={setOvertime}/> 
               </View>
             </View>
-
           </View>
           </TouchableWithoutFeedback>
          
@@ -293,6 +297,17 @@ const [circleColor, setCircleColor] = React.useState('red');
 const addElement = () => { //adds element to list
   if(((offensiveAction != null && actionType != null && resultType != null && currScoreType != null && positionType != null) || offensiveAction == "Fall") && localCircles.length%2 == 0 && localCircles.length/2 == events.length+1)//if input is not null
   {
+
+    // get time from minuteValue and textInputValue and convert to seconds
+    var finalTime = 0;
+    if(minuteValue == '3')
+    {
+      finalTime = 180;
+    }
+    else
+    {
+      finalTime = parseInt(minuteValue)*60 + parseInt(textInputValue);
+    }
 
   //create new array with new element
   var newArray = [...events , {
@@ -400,12 +415,8 @@ const deleteLastCircle = () => {
   };
 
   return (
-
-    // <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     <View style={styles.backgrounMainSection}>
-  
       <View style={styles.eventsSection}> 
-      
           <FlatList 
             data={listState}
             renderItem={item => (
@@ -414,15 +425,14 @@ const deleteLastCircle = () => {
               </View>
             )}
             keyExtractor={item => item.id}
-            
             />
       </View>
-      
-      <View style={styles.eventInput}>
-        <View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', zIndex:1, marginTop: '35%'}}>
 
-          <View style={{width: '25%', zIndex: 1}}>
+      <View style={styles.eventInput}>
+        <View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', zIndex:1, marginTop: '35%',}}>
+          <View style={{width: '25%', zIndex: 1 }}>
             <DropDownPicker
+              style={{ borderRadius: 0 }}
               open={openOff}
               value={valueOff}
               items={offAction}
@@ -472,6 +482,7 @@ const deleteLastCircle = () => {
 
           <View style={{width: '25%', zIndex: 1}}>
             <DropDownPicker
+              style={{ borderRadius: 0 }}
               open={openAct}
               value={valueAct}
               items={currentPos}
@@ -487,6 +498,7 @@ const deleteLastCircle = () => {
  
           <View style={{width: '25%', zIndex: 1}}>
             <DropDownPicker
+              style={{ borderRadius: 0 }}
               open={openRes}
               value={valueRes}
               items={currentRes}
@@ -502,6 +514,7 @@ const deleteLastCircle = () => {
 
           <View style={{width: '25%', zIndex: 1}}>
             <DropDownPicker
+              style={{ borderRadius: 0 }}
               open={openScore}
               value={valueScore}
               items={scoreType}
@@ -515,6 +528,7 @@ const deleteLastCircle = () => {
             />
           </View>
         </View>
+
           <View style={{paddingVertical: 40, alignItems: 'center', flexDirection:'row'}}>
             <View style={{width: "50%", alignItems: 'center'}}>
               <View style={styles.updateBorder}>
@@ -552,18 +566,13 @@ const deleteLastCircle = () => {
           <View style={styles.lastEventGraphBorder}>
           <Button color="black" title="Delete last Circle" onPress={deleteLastCircle} />
         </View>
-        </View>
       </View>
     </View>
-    // </TouchableWithoutFeedback>
+  </View>
   );
 }
 
 const styles = StyleSheet.create({
-  total: {
-    borderRightWidth:3,
-    height: '30%',
-  },
   overtime: {
     width: '15%',
     justifyContent: 'center',
@@ -582,11 +591,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#2d3142',
   },
-  ridingTimeCont: {
-    flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center'
-  },
   positionInput: {
     textAlign: 'center',
     width: '15%',
@@ -598,29 +602,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#2d3142',
-    
   },
   topSection: {
     flexDirection: "row",
   },
-
-  header: {
-    height: '10%',  
-  },
-
   matchInfo: {
     backgroundColor: '#4F5D75',
     height: 90,
     width: '20%',
-    borderRightWidth: 3,
-    alignItems: 'right',
+    alignItems: 'center',
     borderColor: '#4F5D75',
-  },
-  container: {
-    height: '20%',
-    width: '30%',
-    backgroundColor: 'white',
-    alignItems: "left",
   },
   backgrounMainSection: {
     flex: 1,
@@ -647,27 +638,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
     backgroundColor: '#2d3142',
     borderRightColor:'#4F5D75',
-    
-  },
-  timeInput: {
-    width: '25%',
-    height: '75%',
-    alignItems: "center", 
-    borderRightWidth: 3,
-    borderTopWidth: 3,
-    borderBottomWidth: 3,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    backgroundColor: '#2d3142',
-    borderColor:'#4F5D75',
-  },
-  titleText: {
-    alignItems: "center",
-    fontFamily: "Arial",
-    font: "Arial Black",
-    fontWeight: "bold",
-    fontSize: 30,
-    color: "white",
   },
   eventsSection: {
     width: '20%',
