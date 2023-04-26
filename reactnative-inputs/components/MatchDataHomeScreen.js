@@ -16,9 +16,6 @@ export default function MatchDataHomeScreen({ route, navigation, props }) {
     console.log(route.params.matchDetails);
     console.log(route.params.allWrestlerInfo);
     console.log("");
-   
-    
-    // console.log(route.params.allEvents[allEvents.length-1].id);
   
     const [eventName, setEventName] = useState(route.params.matchDetails[0].eventName);
     const [eventType, setEventType] = useState(route.params.matchDetails[0].eventType);
