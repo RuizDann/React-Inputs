@@ -110,7 +110,7 @@ export default function HomeScreen({ route, navigation, props }) {
               }}>
               Enter Date of Event:
             </Text>
-            <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor:'white', marginBottom: 20 }}>
+            <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor:'white', marginBottom: 20, width:165 }}>
               <RNDateTimePicker
                 textColor="white"
                 style={styles.dateInput}
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   dateInput: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: '70%',
+    textColor: 'white',
   },
   button: {
     backgroundColor: 'white',
