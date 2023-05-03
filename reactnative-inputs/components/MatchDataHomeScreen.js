@@ -6,8 +6,6 @@ import * as Sharing from 'expo-sharing';
 
 export default function MatchDataHomeScreen({ route, navigation, props }) {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
-
-    
     console.log("my Array data");
     console.log(route.params.allEvents);
     console.log(route.params.matchDetails);
@@ -20,7 +18,6 @@ export default function MatchDataHomeScreen({ route, navigation, props }) {
     console.log(selectedDate);
     console.log(`${route.params.matchDetails[0].eventName},,`);
 
-  
     const saveData = () => {
         navigation.navigate('NewMatch', { allEvents:route.params.allEvents, matchDetails:route.params.matchDetails, allWrestlerInfo:route.params.allWrestlerInfo})
     };
@@ -41,12 +38,7 @@ export default function MatchDataHomeScreen({ route, navigation, props }) {
         }
     );
 
-
-
-
-
 // function to share the csv file
-
 const shareMatch = async () => {
 // get the match info from the route params
 const matchDetails = route.params.matchDetails;
