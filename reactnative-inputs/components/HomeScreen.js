@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Button, TextInput } from 'react-native';
-import * as ScreenOrientation from 'expo-screen-orientation';
-import moment from 'moment';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 

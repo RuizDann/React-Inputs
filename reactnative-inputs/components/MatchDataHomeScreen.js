@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Button, TextInput, DatePickerIOS, TouchableOpacity } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, Text, View, SafeAreaView, Button, TextInput, TouchableOpacity } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 
@@ -98,18 +95,15 @@ console.log(CSVMATCH);
      encoding: FileSystem.EncodingType.UTF8,
     
     });
-    
-    
-    
-    
+
     // share the file
     
     try {
     
-    await Sharing.shareAsync(fileUri);
+      await Sharing.shareAsync(fileUri);
     
     } catch (error) {
-    alert(error.message);
+      alert(error.message);
     }
 };
 
@@ -175,10 +169,8 @@ return (
           mainSection: {
             height: '100%',
             alignItems: "center", 
-            
             backgroundColor: '#4F5D75',
-        
-            
+
           },
           textInput: {
             alignItems: 'stretch',
@@ -195,12 +187,11 @@ return (
           },
           button: {
             backgroundColor: "white",
-          borderWidth: 2,
-          color: "white",
-          padding: 10,
-          aligntItems: "center",
-          margin: 12,
-        
+            borderWidth: 2,
+            color: "white",
+            padding: 10,
+            aligntItems: "center",
+            margin: 12,
           },
           buttonBorder: {
             borderRadius: 1,
@@ -216,13 +207,11 @@ return (
             alignItems: "center", 
             justifyContent: "stretch",
             backgroundColor: "white",
-        
           },
           textSection: {
             height: '75%',
             alignItems: "center", 
             justifyContent: "center",
-           
             borderRadius: 3,
             width: 1500
     },
