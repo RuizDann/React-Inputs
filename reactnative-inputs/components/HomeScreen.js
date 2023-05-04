@@ -23,11 +23,36 @@ export default function HomeScreen({ route, navigation, props }) {
   const [formattedDate, setFormattedDate] = useState();
 
   const handleDateChange = (event, date) => {
-    if (date) {
+    // if day or month are singular add a 0 in front of it
+    if (date != undefined) {
+      var day = date.getDate();
+      var month = date.getMonth() + 1;
+      var year = date.getFullYear();
+      if (day < 10) {
+        day = '0' + day;
+      }
+      if (month < 10) {
+        month = '0' + month;
+      }
       setSelectedDate(date);
-      setFormattedDate(
-        `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
-      );
+      // setFormattedDate(`${month}/${day}/${year}`);
+      setFormattedDate(`${year}/${month}/${day}`);
+    }
+    else {
+      // set to current date
+      const currentDate = new Date();
+      var day = currentDate.getDate();
+      var month = currentDate.getMonth() + 1;
+      var year = currentDate.getFullYear();
+      if (day < 10) {
+        day = '0' + day;
+      }
+      if (month < 10) {
+        month = '0' + month;
+      }
+      setSelectedDate(currentDate);
+      // setFormattedDate(`${month}/${day}/${year}`);
+      setFormattedDate(`${year}/${month}/${day}`);
     }
     setShowPicker(false);
   };
@@ -37,23 +62,23 @@ export default function HomeScreen({ route, navigation, props }) {
   };
 
   const saveData = () => {
-    if (formattedDate == undefined) {
-      const currentDate = new Date();
-      var newArray = [
-        {
-          eventName: eventName,
-          eventType: eventTypeValue,
-          meetDate: `${
-            currentDate.getMonth() + 1
-          }/${currentDate.getDate()}/${currentDate.getFullYear()}`,
-        },
-      ];
-      navigation.navigate('NewMatch', {
-        allEvents: allEvents,
-        matchDetails: newArray,
-        allWrestlerInfo: allWrestlerInfo,
-      });
-    }
+    // if (formattedDate == undefined) {
+    //   const currentDate = new Date();
+    //   var newArray = [
+    //     {
+    //       eventName: eventName,
+    //       eventType: eventTypeValue,
+    //       meetDate: `${
+    //         currentDate.getMonth() + 1
+    //       }/${currentDate.getDate()}/${currentDate.getFullYear()}`,
+    //     },
+    //   ];
+    //   navigation.navigate('NewMatch', {
+    //     allEvents: allEvents,
+    //     matchDetails: newArray,
+    //     allWrestlerInfo: allWrestlerInfo,
+    //   });
+    // }
     var newArray = [
       {
         eventName: eventName,
@@ -113,7 +138,7 @@ export default function HomeScreen({ route, navigation, props }) {
                 textColor="white"
                 style={styles.dateInput}
                 value={selectedDate}
-                onChange={handleDateChange}
+                onChange={(event, date) => handleDateChange(event, date)}
                 mode="date"
                 format="MM/dd/yyyy"
               />
@@ -127,6 +152,13 @@ export default function HomeScreen({ route, navigation, props }) {
                   onPress={() => {
                     saveData();
                   }}
+                />
+                {/* button to console log date */}
+                <Button
+                  style={styles.button}
+                  color="white"
+                  title="Show Date"
+                  onPress={() => { console.log(formattedDate) }}
                 />
               </View>
             </View>

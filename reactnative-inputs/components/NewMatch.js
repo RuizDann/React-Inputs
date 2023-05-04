@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Button, TextInput, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import DropDownPicker from 'react-native-dropdown-picker';
-import * as ScreenOrientation from 'expo-screen-orientation';
-import { CheckBox } from 'react-native-elements/dist/checkbox/CheckBox';
 
 export default function NewMatch( { navigation, route }, props ) {
 
