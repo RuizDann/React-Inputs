@@ -39,6 +39,8 @@ export default function NewMatch( { navigation, route }, props ) {
     const [openMatchType, setOpenMatchType] = useState(false);
     const [matchTypeValue, setMatchTypeValue] = useState(null);
 
+    console.log(route.params.matchDetails);
+
     const saveData = () => {
 
         var wrestlerInfo = [...totalWrestlerInfo, {

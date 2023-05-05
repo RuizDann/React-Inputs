@@ -38,7 +38,8 @@ export default function HomeScreen({ route, navigation, props }) {
       // setFormattedDate(`${month}/${day}/${year}`);
       setFormattedDate(`${year}/${month}/${day}`);
     }
-    else {
+    else if (date == undefined) {
+      
       // set to current date
       const currentDate = new Date();
       var day = currentDate.getDate();
@@ -62,23 +63,22 @@ export default function HomeScreen({ route, navigation, props }) {
   };
 
   const saveData = () => {
-    // if (formattedDate == undefined) {
-    //   const currentDate = new Date();
-    //   var newArray = [
-    //     {
-    //       eventName: eventName,
-    //       eventType: eventTypeValue,
-    //       meetDate: `${
-    //         currentDate.getMonth() + 1
-    //       }/${currentDate.getDate()}/${currentDate.getFullYear()}`,
-    //     },
-    //   ];
-    //   navigation.navigate('NewMatch', {
-    //     allEvents: allEvents,
-    //     matchDetails: newArray,
-    //     allWrestlerInfo: allWrestlerInfo,
-    //   });
-    // }
+    if (formattedDate == undefined) {
+      const currentDate = new Date();
+      var newArray = [
+        {
+          eventName: eventName,
+          eventType: eventTypeValue,
+          // meetDate as year/month/day
+          meetDate: `${currentDate.getFullYear()}/${currentDate.getMonth() + 1}/${currentDate.getDate()}`,
+        },
+      ];
+      navigation.navigate('NewMatch', {
+        allEvents: allEvents,
+        matchDetails: newArray,
+        allWrestlerInfo: allWrestlerInfo,
+      });
+    }
     var newArray = [
       {
         eventName: eventName,
